@@ -44,6 +44,8 @@ Inherits Canvas
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  Me.Invalidate
+		  
 		  mRaiseActionEvent = True
 		  
 		  Dim retValue As Boolean = RaiseEvent MouseDown(x,y)
@@ -52,10 +54,23 @@ Inherits Canvas
 		    mRaiseActionEvent = False
 		  End If
 		  
-		  mMouseIsDown = True
-		  Me.Invalidate
+		  If mHasMenu = 1 Or mHasMenu = 2 Then
+		    
+		    If retValue = False Then
+		      DoAction()
+		    End If
+		    
+		    Return retValue
+		    
+		  Else
+		    
+		    
+		    mMouseIsDown = True
+		    
+		    Return True
+		    
+		  End If
 		  
-		  Return true
 		End Function
 	#tag EndEvent
 
@@ -116,13 +131,28 @@ Inherits Canvas
 
 	#tag Method, Flags = &h0
 		Sub AddRow(rowText as string)
-		  mMenuTextRows.append rowtext
+		  If mMenu IsA Object Then
+		    RaiseMenuError
+		  End If
+		  
+		  mMenuTextRows.Append rowtext
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub AddSeparator()
-		  mMenuTextRows.append "-"
+		  If mMenu IsA Object Then
+		    RaiseMenuError
+		  End If
+		  
+		  mMenuTextRows.Append "-"
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub ClearIsMenuShowing()
+		  mIsMenuShowing = False
 		  
 		End Sub
 	#tag EndMethod
@@ -163,27 +193,29 @@ Inherits Canvas
 
 	#tag Method, Flags = &h0
 		Sub DeleteAllRows()
-		  redim mMenuTextRows(-1)
+		  Redim mMenuTextRows(-1)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
 		Private Sub DoAction()
-		  
 		  If mHasMenu = 1 Or mHasMenu = 2 Then
+		    If mIsMenuShowing Then
+		      Return
+		    End If
 		    
-		    Dim base As MenuItem = CloneMenuItem(mMenu)
+		    Dim base As MenuItem = mMenu
 		    
-		    For i As Integer = 0 To mMenuTextRows.ubound
-		      If base Is Nil Then
-		        base = New MenuItem
-		      End If
+		    If base Is Nil And mMenuTextRows.Ubound <> -1 Then
+		      base = New MenuItem
 		      
-		      Dim item As New MenuItem(mMenuTextRows(i))
-		      
-		      base.Append item
-		      
-		    Next
+		      For i As Integer = 0 To mMenuTextRows.Ubound
+		        Dim item As New MenuItem(mMenuTextRows(i))
+		        
+		        base.Append item
+		        
+		      Next
+		    End If
 		    
 		    Dim menuLeft As Integer
 		    Dim menuTop As Integer
@@ -191,7 +223,13 @@ Inherits Canvas
 		    FigureMenuPopupLocation(menuLeft, menuTop)
 		    
 		    If base <> Nil Then
+		      mIsMenuShowing = True
 		      Dim result As MenuItem = base.PopUp(menuLeft, menuTop)
+		      
+		      //
+		      // Prevent a second click from showing the menu again on Windows
+		      //
+		      Xojo.Core.Timer.CallLater 250, WeakAddressOf ClearIsMenuShowing
 		      
 		      If result <> Nil Then
 		        RaiseEvent MenuAction(result)
@@ -592,8 +630,21 @@ Inherits Canvas
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h21
+		Private Sub RaiseMenuError()
+		  Dim err As New UnsupportedOperationException
+		  err.Message = kMenuError
+		  Raise err
+		  
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub RemoveRow(row as integer)
+		  If mMenu IsA Object Then
+		    RaiseMenuError
+		  End If
+		  
 		  If row < 0 Or row > mMenuTextRows.Ubound Then
 		    Raise New OutOfBoundsException
 		  End If
@@ -604,8 +655,11 @@ Inherits Canvas
 
 	#tag Method, Flags = &h0
 		Sub SetMenu(m As MenuItem)
-		  mMenu = CloneMenuItem(m)
+		  If mMenuTextRows.Ubound <> -1 Then
+		    RaiseMenuError
+		  End If
 		  
+		  mMenu = m
 		End Sub
 	#tag EndMethod
 
@@ -948,6 +1002,10 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mIsMenuShowing As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mItalic As boolean
 	#tag EndProperty
 
@@ -1115,6 +1173,9 @@ Inherits Canvas
 	#tag EndConstant
 
 	#tag Constant, Name = arcWidth, Type = Double, Dynamic = False, Default = \"9", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = kMenuError, Type = String, Dynamic = False, Default = \"You may use SetMenu or the menu functions\x2C but not both", Scope = Private
 	#tag EndConstant
 
 
