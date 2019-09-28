@@ -227,7 +227,22 @@ Protected Module SemanticColors
 		      
 		    #Else
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
-		        Break
+		        
+		        Declare Function controlDarkShadowColor Lib "AppKit" Selector "controlDarkShadowColor" (obj As Ptr) As Ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "controlDarkShadowColor") Then
+		          NSColorPtr = controlDarkShadowColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
+		        
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &c00000000
@@ -252,7 +267,20 @@ Protected Module SemanticColors
 		    #Else
 		      
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
-		        Break
+		        Declare Function controlHighlightColor Lib "AppKit" Selector "controlHighlightColor" (obj As Ptr) As Ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "controlHighlightColor") Then
+		          NSColorPtr = controlHighlightColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &cE2E2E200
@@ -277,7 +305,20 @@ Protected Module SemanticColors
 		      
 		    #Else
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
-		        Break
+		        Declare Function controlLightHighlightColor Lib "AppKit" Selector "controlLightHighlightColor" (obj As Ptr) As Ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "controlLightHighlightColor") Then
+		          NSColorPtr = controlLightHighlightColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &cFFFFFF00
@@ -301,7 +342,20 @@ Protected Module SemanticColors
 		      
 		    #Else
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
-		        Break
+		        Declare Function controlShadowColor Lib "AppKit" Selector "controlShadowColor" (obj As Ptr) As Ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "controlShadowColor") Then
+		          NSColorPtr = controlShadowColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &c8D8D8D00
@@ -612,7 +666,21 @@ Protected Module SemanticColors
 		      
 		    #Else
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
-		        break
+		        Declare Function knobColor Lib "AppKit" Selector "knobColor" (obj As Ptr) As Ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "knobColor") Then
+		          NSColorPtr = knobColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
+		        
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &c8685AC00
@@ -943,7 +1011,20 @@ Protected Module SemanticColors
 		    #Else
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
 		        
-		        Break
+		        Declare Function scrollBarColor Lib "AppKit" Selector "scrollBarColor" (obj As Ptr) As Ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "scrollBarColor") Then
+		          NSColorPtr = scrollBarColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &c99999900
@@ -1118,7 +1199,21 @@ Protected Module SemanticColors
 		      
 		    #Else
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
-		        Break
+		        
+		        Declare Function selectedKnobColor Lib "AppKit" Selector "selectedKnobColor" (obj As Ptr) As Ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "selectedKnobColor") Then
+		          NSColorPtr = selectedKnobColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &c52508600
@@ -1899,7 +1994,20 @@ Protected Module SemanticColors
 		    #Else
 		      
 		      If MacMajorVersion = 10 And 10 <= MacMinorVersion And MacMinorVersion < 14 Then
-		        break
+		        Declare Function windowFrameColor Lib "AppKit" Selector "windowFrameColor" (obj As Ptr) As ptr
+		        
+		        InitNSColorClass
+		        Dim NSColorPtr As Ptr
+		        
+		        If RespondsToSelector( NSColorClass, "windowFrameColor") Then
+		          NSColorPtr = windowFrameColor(NSColorClass)
+		        End If
+		        
+		        If NSColorPtr = Nil Then
+		          Return &cFF0000
+		        End If
+		        
+		        Return NSColorToColor(NSColorPtr)
 		      Else
 		        // no semantic color on 10.14 and up
 		        Return &c99999900
