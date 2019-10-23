@@ -281,6 +281,8 @@ Inherits Canvas
 		  Const kDisclosureBevelWidth = 20
 		  Const kDisclosureBevelHeight = 20
 		  
+		  g.ClearRect 0, 0, g.width, g.height
+		  
 		  // what colors to use ????
 		  // ButtonType
 		  // 0 - Button
