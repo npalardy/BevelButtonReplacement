@@ -231,6 +231,10 @@ Inherits Canvas
 		      For i As Integer = 0 To mMenuTextRows.Ubound
 		        Dim item As New MenuItem(mMenuTextRows(i))
 		        
+		        If MenuValue >= 0 And i = MenuValue Then
+		          item.Checked = True
+		        End If
+		        
 		        base.Append item
 		        
 		      Next

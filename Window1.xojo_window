@@ -361,7 +361,7 @@ Begin Window Window1
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      MenuValue       =   0
+      MenuValue       =   2
       Scope           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
@@ -410,7 +410,7 @@ Begin Window Window1
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      MenuValue       =   0
+      MenuValue       =   2
       mMouseIsDown    =   False
       Scope           =   0
       TabIndex        =   8
@@ -1997,6 +1997,7 @@ Begin Window Window1
    End
    Begin bevelButtonReplacement bevelButtonReplacement21
       AcceptFocus     =   True
+      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Backdrop        =   0
@@ -2007,6 +2008,7 @@ Begin Window Window1
       CaptionAlign    =   3
       CaptionDelta    =   0
       CaptionPlacement=   1
+      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -2027,6 +2029,7 @@ Begin Window Window1
       LockRight       =   False
       LockTop         =   True
       MenuValue       =   0
+      mMouseIsDown    =   False
       Scope           =   0
       TabIndex        =   47
       TabPanelIndex   =   0
@@ -2039,6 +2042,7 @@ Begin Window Window1
       Transparent     =   False
       Underline       =   False
       UseBevelButtonTextColor=   False
+      UseFocusRing    =   False
       Value           =   False
       Visible         =   True
       Width           =   60
@@ -2090,6 +2094,7 @@ Begin Window Window1
    End
    Begin bevelButtonReplacement bevelButtonReplacement22
       AcceptFocus     =   True
+      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Backdrop        =   0
@@ -2100,6 +2105,7 @@ Begin Window Window1
       CaptionAlign    =   3
       CaptionDelta    =   0
       CaptionPlacement=   1
+      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -2120,6 +2126,7 @@ Begin Window Window1
       LockRight       =   False
       LockTop         =   True
       MenuValue       =   0
+      mMouseIsDown    =   False
       Scope           =   0
       TabIndex        =   49
       TabPanelIndex   =   0
@@ -2132,6 +2139,7 @@ Begin Window Window1
       Transparent     =   False
       Underline       =   False
       UseBevelButtonTextColor=   False
+      UseFocusRing    =   False
       Value           =   False
       Visible         =   True
       Width           =   60
@@ -2183,6 +2191,7 @@ Begin Window Window1
    End
    Begin bevelButtonReplacement bevelButtonReplacement23
       AcceptFocus     =   True
+      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Backdrop        =   0
@@ -2193,6 +2202,7 @@ Begin Window Window1
       CaptionAlign    =   3
       CaptionDelta    =   0
       CaptionPlacement=   1
+      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -2213,6 +2223,7 @@ Begin Window Window1
       LockRight       =   False
       LockTop         =   True
       MenuValue       =   0
+      mMouseIsDown    =   False
       Scope           =   0
       TabIndex        =   51
       TabPanelIndex   =   0
@@ -2225,6 +2236,7 @@ Begin Window Window1
       Transparent     =   False
       Underline       =   False
       UseBevelButtonTextColor=   False
+      UseFocusRing    =   False
       Value           =   False
       Visible         =   True
       Width           =   60
@@ -2276,6 +2288,7 @@ Begin Window Window1
    End
    Begin bevelButtonReplacement bevelButtonReplacement24
       AcceptFocus     =   True
+      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Backdrop        =   0
@@ -2286,6 +2299,7 @@ Begin Window Window1
       CaptionAlign    =   3
       CaptionDelta    =   0
       CaptionPlacement=   1
+      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
@@ -2306,6 +2320,7 @@ Begin Window Window1
       LockRight       =   False
       LockTop         =   True
       MenuValue       =   0
+      mMouseIsDown    =   False
       Scope           =   0
       TabIndex        =   53
       TabPanelIndex   =   0
@@ -2318,6 +2333,7 @@ Begin Window Window1
       Transparent     =   False
       Underline       =   False
       UseBevelButtonTextColor=   False
+      UseFocusRing    =   False
       Value           =   False
       Visible         =   True
       Width           =   60
@@ -2552,14 +2568,18 @@ End
 #tag Events BevelButton6
 	#tag Event
 		Sub Open()
-		  fillmenu( me )
+		  fillmenu( Me )
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events bevelButtonReplacement2
 	#tag Event
 		Sub Open()
-		  fillmenu( me )
+		  fillmenu( Me )
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
