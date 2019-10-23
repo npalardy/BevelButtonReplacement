@@ -64,7 +64,6 @@ Inherits Canvas
 		    
 		  Else
 		    
-		    
 		    mMouseIsDown = True
 		    
 		    Return True
@@ -88,11 +87,24 @@ Inherits Canvas
 		  #pragma unused Y
 		  
 		  If mRaiseActionEvent Then
-		    If (x >= Me.Left) And (x <= Me.Left + Me.width) _
-		      And (y >= Me.top) And (y <= Me.top + Me.height) Then
-		      DoAction
+		    If (x >= 0) And (x <= Me.width) And (y >= 0) And (y <= Me.height) Then
+		      
+		      // ok here's a screwy set up 
+		      // a toggle or sticky button with a menu
+		      // we ignore the toggle and stickness
+		      If (ButtonType = 1) And (HasMenu = 0) Then
+		        // toggle the toggle button
+		        value = Not value
+		      Elseif (ButtonType = 2) And (HasMenu = 0) Then
+		        // sticky buttons just get set to true
+		        value = True
+		      Else
+		        DoAction
+		      End If
+		      
 		    End If
 		  End If
+		  
 		  
 		  mMouseIsDown = False
 		  Me.Invalidate
@@ -192,7 +204,9 @@ Inherits Canvas
 	#tag Method, Flags = &h21
 		Private Function darken(c as color) As color
 		  
-		  return c
+		  Dim darkerColor As Color = HSV(c.hue, c.Saturation, max(0,c.Value-0.2), c.Alpha)
+		  
+		  Return darkerColor
 		End Function
 	#tag EndMethod
 
@@ -259,12 +273,39 @@ Inherits Canvas
 		  Dim topX As Integer
 		  Dim topY As Integer
 		  
-		  // darn thing in this style is fixed size not matter what
+		  // darn thing in this style is fixed size no matter what
 		  Const kDisclosureBevelWidth = 20
 		  Const kDisclosureBevelHeight = 20
 		  
 		  // what colors to use ????
-		  If HasBackColor And mMouseIsDown and self.HasMenu = 0 Then
+		  // ButtonType
+		  // 0 - Button
+		  // 1 - Toggle
+		  // 2 - Sticky
+		  If buttontype = 1  Then
+		    
+		    If value Then
+		      If IsDarkMode Then
+		        g.ForeColor = lighten(backcolor) // lighten slightly
+		      Else
+		        g.forecolor = darken(backcolor) // darken slightly
+		      End If
+		    Else
+		      // back color 
+		      g.ForeColor = BackColor
+		    End If
+		    
+		  Elseif buttontype = 2 Then
+		    
+		    If value Then
+		      If IsDarkMode Then
+		        g.ForeColor = lighten(backcolor) // lighten slightly
+		      Else
+		        g.forecolor = darken(backcolor) // darken slightly
+		      End If
+		    End If
+		    
+		  Elseif (HasBackColor And mMouseIsDown And Self.HasMenu = 0) Then
 		    // if its dark mode do we light this ?
 		    // and in light mode darken it ?
 		    If IsDarkMode Then
@@ -273,7 +314,7 @@ Inherits Canvas
 		      g.forecolor = darken(backcolor) // darken slightly
 		    End If
 		    
-		  Elseif mMouseIsDown and self.HasMenu = 0 Then
+		  Elseif mMouseIsDown And Self.HasMenu = 0 Then
 		    // mouse down no back color
 		    #Pragma BreakOnExceptions False
 		    Try
@@ -283,26 +324,25 @@ Inherits Canvas
 		    End Try
 		    #Pragma BreakOnExceptions default
 		    
-		    
 		  Elseif HasBackColor Then
 		    // back color no mouse down
 		    g.ForeColor = BackColor
 		    
 		  Else
 		    // no back no mouse down
-		    if self.Value then
-		      #if TargetMacOS
+		    If Self.Value Then
+		      #If TargetMacOS
 		        g.ForeColor = SemanticColors.controlAccentColor
-		      #else
+		      #Else
 		        g.ForeColor = &c8CBAFF00
-		      #endif
-		    else
-		      #if TargetMacOS
+		      #EndIf
+		    Else
+		      #If TargetMacOS
 		        g.ForeColor = SemanticColors.controlBackgroundColor
-		      #else
+		      #Else
 		        g.ForeColor = &cFFFEFE00
-		      #endif
-		    end if
+		      #EndIf
+		    End If
 		  End If
 		  
 		  // fill the background 
@@ -682,7 +722,9 @@ Inherits Canvas
 	#tag Method, Flags = &h21
 		Private Function lighten(c as color) As color
 		  
-		  return c
+		  Dim lighterColor As Color = HSV(c.hue, c.Saturation, min(1,c.Value+0.2), c.Alpha)
+		  
+		  Return lighterColor
 		End Function
 	#tag EndMethod
 

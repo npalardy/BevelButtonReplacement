@@ -9,7 +9,7 @@ Begin Window Window1
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   910
+   Height          =   772
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -1503,38 +1503,6 @@ Begin Window Window1
       Y1              =   416
       Y2              =   416
    End
-   Begin PushButton PushButton1
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   True
-      Caption         =   "Cancel"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   406
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   30
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   42
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
    Begin bevelButtonReplacement bevelButtonReplacement12
       AcceptFocus     =   True
       AcceptTabs      =   False
@@ -1982,24 +1950,24 @@ Begin Window Window1
       Visible         =   True
       Width           =   156
    End
-   Begin BevelButton BevelButton22
+   Begin BevelButton BevelButton25
       AcceptFocus     =   True
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
-      ButtonType      =   0
-      Caption         =   "icon"
-      CaptionAlign    =   0
-      CaptionDelta    =   20
+      ButtonType      =   1
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
       CaptionPlacement=   1
       Enabled         =   True
       HasBackColor    =   False
-      HasMenu         =   0
-      Height          =   42
+      HasMenu         =   2
+      Height          =   22
       HelpTag         =   ""
-      Icon            =   957425663
-      IconAlign       =   7
+      Icon            =   0
+      IconAlign       =   0
       IconDX          =   0
       IconDY          =   0
       Index           =   -2147483648
@@ -2013,42 +1981,40 @@ Begin Window Window1
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
-      TabIndex        =   40
+      TabIndex        =   46
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   680
+      Top             =   696
       Transparent     =   False
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   156
+      Width           =   60
    End
-   Begin bevelButtonReplacement bevelButtonReplacement18
+   Begin bevelButtonReplacement bevelButtonReplacement21
       AcceptFocus     =   True
-      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Backdrop        =   0
       Bevel           =   0
       Bold            =   False
-      ButtonType      =   0
-      Caption         =   "flush abcdefghijklmnopqrstuvwxyz left"
-      CaptionAlign    =   0
-      CaptionDelta    =   20
+      ButtonType      =   1
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
       CaptionPlacement=   1
-      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      HasMenu         =   0
-      Height          =   42
+      HasMenu         =   2
+      Height          =   22
       HelpTag         =   ""
-      Icon            =   957425663
-      IconAlign       =   7
+      Icon            =   0
+      IconAlign       =   0
       IconDX          =   0
       IconDY          =   0
       Index           =   -2147483648
@@ -2061,42 +2027,133 @@ Begin Window Window1
       LockRight       =   False
       LockTop         =   True
       MenuValue       =   0
-      mMouseIsDown    =   False
       Scope           =   0
-      TabIndex        =   41
+      TabIndex        =   47
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   2
-      Top             =   743
+      Top             =   730
       Transparent     =   False
       Underline       =   False
       UseBevelButtonTextColor=   False
-      UseFocusRing    =   False
       Value           =   False
       Visible         =   True
-      Width           =   156
+      Width           =   60
    End
-   Begin BevelButton BevelButton23
+   Begin BevelButton BevelButton26
       AcceptFocus     =   True
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
-      ButtonType      =   0
-      Caption         =   "icon"
-      CaptionAlign    =   0
-      CaptionDelta    =   20
+      ButtonType      =   2
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   1
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   0
+      IconAlign       =   0
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   226
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   48
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   696
+      Transparent     =   False
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   60
+   End
+   Begin bevelButtonReplacement bevelButtonReplacement22
+      AcceptFocus     =   True
+      AutoDeactivate  =   True
+      BackColor       =   &c00000000
+      Backdrop        =   0
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   2
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      HasMenu         =   1
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   0
+      IconAlign       =   0
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   226
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   49
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   2
+      Top             =   730
+      Transparent     =   False
+      Underline       =   False
+      UseBevelButtonTextColor=   False
+      Value           =   False
+      Visible         =   True
+      Width           =   60
+   End
+   Begin BevelButton BevelButton27
+      AcceptFocus     =   True
+      AutoDeactivate  =   True
+      BackColor       =   &c00000000
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   1
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
       CaptionPlacement=   1
       Enabled         =   True
       HasBackColor    =   False
       HasMenu         =   0
-      Height          =   42
+      Height          =   22
       HelpTag         =   ""
-      Icon            =   957425663
-      IconAlign       =   8
+      Icon            =   0
+      IconAlign       =   0
       IconDX          =   0
       IconDY          =   0
       Index           =   -2147483648
@@ -2110,42 +2167,40 @@ Begin Window Window1
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
-      TabIndex        =   42
+      TabIndex        =   50
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   680
+      Top             =   696
       Transparent     =   False
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   156
+      Width           =   60
    End
-   Begin bevelButtonReplacement bevelButtonReplacement19
+   Begin bevelButtonReplacement bevelButtonReplacement23
       AcceptFocus     =   True
-      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Backdrop        =   0
       Bevel           =   0
       Bold            =   False
-      ButtonType      =   0
-      Caption         =   "flush abcdefghijklmnopqrstuvwxyz left"
-      CaptionAlign    =   0
-      CaptionDelta    =   20
+      ButtonType      =   1
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
       CaptionPlacement=   1
-      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       HasMenu         =   0
-      Height          =   42
+      Height          =   22
       HelpTag         =   ""
-      Icon            =   957425663
-      IconAlign       =   8
+      Icon            =   0
+      IconAlign       =   0
       IconDX          =   0
       IconDY          =   0
       Index           =   -2147483648
@@ -2158,48 +2213,46 @@ Begin Window Window1
       LockRight       =   False
       LockTop         =   True
       MenuValue       =   0
-      mMouseIsDown    =   False
       Scope           =   0
-      TabIndex        =   43
+      TabIndex        =   51
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   2
-      Top             =   743
+      Top             =   730
       Transparent     =   False
       Underline       =   False
       UseBevelButtonTextColor=   False
-      UseFocusRing    =   False
       Value           =   False
       Visible         =   True
-      Width           =   156
+      Width           =   60
    End
-   Begin BevelButton BevelButton24
+   Begin BevelButton BevelButton28
       AcceptFocus     =   True
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
-      ButtonType      =   0
-      Caption         =   "icon"
-      CaptionAlign    =   0
-      CaptionDelta    =   20
+      ButtonType      =   2
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
       CaptionPlacement=   1
       Enabled         =   True
       HasBackColor    =   False
       HasMenu         =   0
-      Height          =   42
+      Height          =   22
       HelpTag         =   ""
-      Icon            =   957425663
-      IconAlign       =   9
+      Icon            =   0
+      IconAlign       =   0
       IconDX          =   0
       IconDY          =   0
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   480
+      Left            =   384
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -2207,44 +2260,78 @@ Begin Window Window1
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
-      TabIndex        =   44
+      TabIndex        =   52
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   680
+      Top             =   696
       Transparent     =   False
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   156
+      Width           =   60
    End
-   Begin bevelButtonReplacement bevelButtonReplacement20
+   Begin bevelButtonReplacement bevelButtonReplacement24
       AcceptFocus     =   True
-      AcceptTabs      =   False
       AutoDeactivate  =   True
       BackColor       =   &c00000000
       Backdrop        =   0
       Bevel           =   0
       Bold            =   False
-      ButtonType      =   0
-      Caption         =   "flush abcdefghijklmnopqrstuvwxyz left"
-      CaptionAlign    =   0
-      CaptionDelta    =   20
+      ButtonType      =   2
+      Caption         =   "Untitled"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
       CaptionPlacement=   1
-      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
       HasMenu         =   0
-      Height          =   42
+      Height          =   22
       HelpTag         =   ""
-      Icon            =   957425663
-      IconAlign       =   9
+      Icon            =   0
+      IconAlign       =   0
       IconDX          =   0
       IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   384
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   53
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   2
+      Top             =   730
+      Transparent     =   False
+      Underline       =   False
+      UseBevelButtonTextColor=   False
+      Value           =   False
+      Visible         =   True
+      Width           =   60
+   End
+   Begin PushButton PushButton1
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   True
+      Caption         =   "Cancel"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -2254,24 +2341,18 @@ Begin Window Window1
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      MenuValue       =   0
-      mMouseIsDown    =   False
       Scope           =   0
-      TabIndex        =   45
+      TabIndex        =   54
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   2
-      Top             =   743
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   696
       Transparent     =   False
       Underline       =   False
-      UseBevelButtonTextColor=   False
-      UseFocusRing    =   False
-      Value           =   False
       Visible         =   True
-      Width           =   156
+      Width           =   80
    End
 End
 #tag EndWindow
@@ -2668,45 +2749,98 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events BevelButton22
+#tag Events BevelButton25
 	#tag Event
 		Sub Action()
-		  break
+		  
+		  System.debuglog CurrentMethodName + " value = " + Str(me.value)
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events bevelButtonReplacement18
+#tag Events bevelButtonReplacement21
 	#tag Event
-		Sub Action()
-		  break
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events BevelButton23
+#tag Events BevelButton26
 	#tag Event
-		Sub Action()
-		  break
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events bevelButtonReplacement19
+#tag Events bevelButtonReplacement22
 	#tag Event
-		Sub Action()
-		  break
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events BevelButton24
+#tag Events BevelButton27
 	#tag Event
 		Sub Action()
-		  break
+		  
+		  System.debuglog CurrentMethodName + " value = " + Str(me.value)
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events bevelButtonReplacement20
+#tag Events bevelButtonReplacement23
+	#tag Event
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events BevelButton28
+	#tag Event
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events bevelButtonReplacement24
+	#tag Event
+		Sub Open()
+		  
+		  fillmenu( Me )
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton1
 	#tag Event
 		Sub Action()
-		  break
+		  BevelButton28.value = False
+		  bevelButtonReplacement24.value = False
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
