@@ -1,0 +1,40 @@
+#tag MultiImage
+Image Garfield_29x29
+	#tag ImageRepresentation
+		SaveInfo = APHRcwECAQAAAAHmAAAAAAHmAAIAAAxNYWNpbnRvc2ggSEQAAAAAAAAAAAAAAAAAAAAAAAAAQkQAAf////8SR2FyZmllbGRfMjl4MjkucG5nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAABQTkdmR0tPTv////8AAAogY3UAAAAAAAAAAAAAAAAAFkJldmVsQnV0dG9uUmVwbGFjZW1lbnQAAgBrLzpVc2VyczpucGFsYXJkeTpNeSBEb2N1bWVudHM6R3JlYXQgV2hpdGUgU29mdHdhcmU6R2l0SHViUHJvamVjdHM6QmV2ZWxCdXR0b25SZXBsYWNlbWVudDpHYXJmaWVsZF8yOXgyOS5wbmcAAA4AJgASAEcAYQByAGYAaQBlAGwAZABfADIAOQB4ADIAOQAuAHAAbgBnAA8AGgAMAE0AYQBjAGkAbgB0AG8AcwBoACAASABEABIAaVVzZXJzL25wYWxhcmR5L015IERvY3VtZW50cy9HcmVhdCBXaGl0ZSBTb2Z0d2FyZS9HaXRIdWJQcm9qZWN0cy9CZXZlbEJ1dHRvblJlcGxhY2VtZW50L0dhcmZpZWxkXzI5eDI5LnBuZwAAEwABLwAAFQACAA///wAAAAAAAAAA
+		FullPath = /Users/npalardy/My Documents/Great White Software/GitHubProjects/BevelButtonReplacement/Garfield_29x29.png
+		PartialPath = Garfield_29x29.png
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 16.00
+			Orientation = Any
+			Platform = 15
+			PPI = 72
+			VSize = 16.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 16.00
+			Orientation = Any
+			Platform = 15
+			PPI = 144
+			VSize = 16.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 16.00
+			Orientation = Any
+			Platform = 15
+			PPI = 216
+			VSize = 16.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+End Image
+#tag EndMultiImage

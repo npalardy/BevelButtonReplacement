@@ -84,11 +84,14 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
-		  #pragma unused X
+		  #Pragma unused X
 		  #pragma unused Y
 		  
 		  If mRaiseActionEvent Then
-		    DoAction()
+		    If (x >= Me.Left) And (x <= Me.Left + Me.width) _
+		      And (y >= Me.top) And (y <= Me.top + Me.height) Then
+		      DoAction
+		    End If
 		  End If
 		  
 		  mMouseIsDown = False
@@ -111,9 +114,11 @@ Inherits Canvas
 
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  #pragma unused areas
+		  #Pragma unused areas
 		  
 		  DrawBackAndBevel(g)
+		  
+		  DrawIcon(g)
 		  
 		  DrawMenuIndicator(g)
 		  
@@ -243,8 +248,8 @@ Inherits Canvas
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Sub DrawBackAndBevel(g as graphics)
+	#tag Method, Flags = &h1
+		Protected Sub DrawBackAndBevel(g as graphics)
 		  Dim tmp As Boolean = g.AntiAlias
 		  g.AntiAlias = True
 		  
@@ -384,8 +389,8 @@ Inherits Canvas
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Sub DrawCaption(g as graphics)
+	#tag Method, Flags = &h1
+		Protected Sub DrawCaption(g as graphics)
 		  Dim tmp As Boolean = g.AntiAlias
 		  g.AntiAlias = True
 		  
@@ -472,8 +477,71 @@ Inherits Canvas
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Sub DrawMenuIndicator(g as graphics)
+	#tag Method, Flags = &h1
+		Protected Sub DrawIcon(g as graphics)
+		  Const kDefaultInset = 2
+		  
+		  Dim tmp As Boolean = g.AntiAlias
+		  g.AntiAlias = True
+		  
+		  If Self.Icon <> Nil Then
+		    Dim iconTop As Integer
+		    Dim iconLeft As Integer
+		    
+		    Select Case IconAlignments(Self.IconAlign)
+		      
+		    Case IconAlignments.SysDirection
+		      iconLeft = kDefaultInset
+		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      
+		    Case IconAlignments.Bottom
+		      iconLeft = (Me.width / 2) - (icon.width / 2)
+		      iconTop = Self.Height - icon.Height - kDefaultInset
+		      
+		    Case IconAlignments.BottomLeft
+		      iconLeft = kDefaultInset
+		      iconTop = Self.Height - icon.Height - kDefaultInset
+		      
+		    Case IconAlignments.BottomRight
+		      iconLeft = Me.width - kDefaultInset - icon.width
+		      iconTop = Self.Height - icon.Height - kDefaultInset
+		      
+		    Case IconAlignments.Center
+		      iconLeft = (Me.width / 2) - (icon.width / 2)
+		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      
+		    Case IconAlignments.Left
+		      iconLeft = kDefaultInset
+		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      
+		    Case IconAlignments.Right
+		      iconLeft = Me.width - kDefaultInset - icon.width
+		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      
+		    Case IconAlignments.Top
+		      iconLeft = (Me.width / 2) - (icon.width / 2)
+		      iconTop = kDefaultInset
+		      
+		    Case IconAlignments.TopLeft
+		      iconLeft = kDefaultInset
+		      iconTop = kDefaultInset
+		      
+		    Case IconAlignments.TopRight
+		      iconLeft = Me.width - kDefaultInset - icon.width
+		      iconTop = kDefaultInset
+		      
+		    End Select
+		    
+		    g.DrawPicture Self.icon, iconLeft, iconTop
+		    
+		  End If
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub DrawMenuIndicator(g as graphics)
 		  If bevel = 7 Then // disclosure style
 		    Return
 		  End If
@@ -1177,6 +1245,20 @@ Inherits Canvas
 
 	#tag Constant, Name = kMenuError, Type = String, Dynamic = False, Default = \"You may use SetMenu or the menu functions\x2C but not both", Scope = Private
 	#tag EndConstant
+
+
+	#tag Enum, Name = IconAlignments, Flags = &h0
+		SysDirection
+		  Center
+		  Left
+		  Right
+		  Top
+		  Bottom
+		  TopLeft
+		  BottomLeft
+		  TopRight
+		BottomRight
+	#tag EndEnum
 
 
 	#tag ViewBehavior
