@@ -673,7 +673,7 @@ Begin Window Window1
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   2
-      Top             =   245
+      Top             =   242
       Transparent     =   False
       Underline       =   False
       UseBevelButtonTextColor=   False
@@ -1368,7 +1368,7 @@ Begin Window Window1
       Bevel           =   7
       Bold            =   False
       ButtonType      =   0
-      Caption         =   "Untitled"
+      Caption         =   ""
       CaptionAlign    =   3
       CaptionDelta    =   0
       CaptionPlacement=   1
@@ -1384,7 +1384,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   66
+      Left            =   32
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -1433,7 +1433,7 @@ Begin Window Window1
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   66
+      Left            =   32
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -1457,51 +1457,6 @@ Begin Window Window1
       Value           =   False
       Visible         =   True
       Width           =   22
-   End
-   Begin Line Line1
-      BorderWidth     =   1
-      Index           =   -2147483648
-      InitialParent   =   ""
-      LineColor       =   &c00000000
-      LockedInPosition=   False
-      Scope           =   0
-      TabPanelIndex   =   0
-      Transparent     =   False
-      Visible         =   True
-      X1              =   66
-      X2              =   900
-      Y1              =   404
-      Y2              =   404
-   End
-   Begin Line Line3
-      BorderWidth     =   1
-      Index           =   -2147483648
-      InitialParent   =   ""
-      LineColor       =   &c00000000
-      LockedInPosition=   False
-      Scope           =   0
-      TabPanelIndex   =   0
-      Transparent     =   False
-      Visible         =   True
-      X1              =   55
-      X2              =   889
-      Y1              =   413
-      Y2              =   413
-   End
-   Begin Line Line4
-      BorderWidth     =   1
-      Index           =   -2147483648
-      InitialParent   =   ""
-      LineColor       =   &c00000000
-      LockedInPosition=   False
-      Scope           =   0
-      TabPanelIndex   =   0
-      Transparent     =   False
-      Visible         =   True
-      X1              =   59
-      X2              =   893
-      Y1              =   416
-      Y2              =   416
    End
    Begin bevelButtonReplacement bevelButtonReplacement12
       AcceptFocus     =   True
@@ -2370,6 +2325,103 @@ Begin Window Window1
       Visible         =   True
       Width           =   80
    End
+   Begin BevelButton BevelButton29
+      AcceptFocus     =   True
+      AutoDeactivate  =   True
+      BackColor       =   &c00000000
+      Bevel           =   7
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   1
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   0
+      IconAlign       =   0
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   66
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   55
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   612
+      Transparent     =   False
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
+   Begin bevelButtonReplacement bevelButtonReplacement25
+      AcceptFocus     =   True
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      BackColor       =   &c00000000
+      Backdrop        =   0
+      Bevel           =   7
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   "center"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      HasMenu         =   1
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   0
+      IconAlign       =   0
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   66
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      mMouseIsDown    =   False
+      Scope           =   0
+      TabIndex        =   56
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   646
+      Transparent     =   False
+      Underline       =   False
+      UseBevelButtonTextColor=   False
+      UseFocusRing    =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
 End
 #tag EndWindow
 
@@ -2508,7 +2560,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  fillmenu( me )
+		  fillmenu( Me )
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -2861,6 +2915,20 @@ End
 		  BevelButton28.value = False
 		  bevelButtonReplacement24.value = False
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events BevelButton29
+	#tag Event
+		Sub Open()
+		  fillmenu( me )
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events bevelButtonReplacement25
+	#tag Event
+		Sub Open()
+		  fillmenu( me )
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -82,6 +82,27 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
+		Sub MouseEnter()
+		  mMouseInside = True
+		  
+		  Me.Invalidate
+		  
+		  RaiseEvent MouseEnter
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseExit()
+		  mMouseInside = False
+		  
+		  Me.Invalidate
+		  
+		  RaiseEvent MouseExit
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #Pragma unused X
 		  #pragma unused Y
@@ -288,7 +309,7 @@ Inherits Canvas
 		  // 0 - Button
 		  // 1 - Toggle
 		  // 2 - Sticky
-		  If buttontype = 1  Then
+		  If buttontype = kNormalBevel  Then
 		    
 		    If value Then
 		      If IsDarkMode Then
@@ -301,7 +322,7 @@ Inherits Canvas
 		      g.ForeColor = BackColor
 		    End If
 		    
-		  Elseif buttontype = 2 Then
+		  Elseif buttontype = kLargeBevel Then
 		    
 		    If value Then
 		      If IsDarkMode Then
@@ -351,27 +372,49 @@ Inherits Canvas
 		    End If
 		  End If
 		  
+		  #If TargetWindows
+		    If mMouseInside Then
+		      g.ForeColor = &cB2E0F9
+		    End If
+		  #EndIf
+		  
 		  // fill the background 
-		  If bevel = 3 Then // round rect style
+		  If bevel = kRoundedBevel Then // round rect style
 		    g.FillRoundRect 0, 0, g.width, g.height, arcWidth, arcHeight
-		  Elseif bevel = 7 Then // disclosure style
+		    
+		  Elseif bevel = kDisclosureBevel Then // disclosure style
 		    g.FillRoundRect 0, (g.height/2) - (kDisclosureBevelHeight/2) , kDisclosureBevelWidth, kDisclosureBevelHeight, arcWidth, arcHeight
 		    
-		  Elseif bevel = 5 Or bevel = 6 Then // round and large round (which appear to be the same)
+		  Elseif bevel = kRoundBevel Or bevel = kLargeRoundBevel Then // round and large round (which appear to be the same)
 		    midX = g.width / 2
 		    midY = g.height / 2
 		    //ovalSize = Min(g.height, g.width)
 		    topX = midX - (ovalsize / 2)
 		    topY = midY - (ovalSize / 2)
 		    g.FillOval topX, topY, ovalSize, ovalSize
+		  Elseif bevel = kNoBevel Then
+		    // no bevel !!!!!!
+		    
 		  Else
-		    if IsDarkMode or self.Value then
+		    If IsDarkMode Or Self.Value Then
 		      g.FillRect 0, 0, g.width, g.height
-		    else
+		    Else
 		      //g.FillRect 0, 0, g.width, g.height
 		      Dim sAmt, eAmt As Double
-		      Dim startColor As Color = &cE9E9E9
-		      Dim endColor As Color = &cF7F7F7
+		      Dim startColor As Color
+		      Dim endColor As Color
+		      #If TargetWindows
+		        If mMouseInside Then
+		          startColor = &cE1F3FC
+		          endColor = &cB2E0F9
+		        Else
+		          startColor = &cE9E9E9
+		          endColor = &cF7F7F7
+		        End If
+		      #Else
+		        startColor = &cE9E9E9
+		        endColor = &cF7F7F7
+		      #EndIf
 		      
 		      For i As Integer = 0 To height
 		        sAmt = 1 - (i / g.height)
@@ -381,13 +424,13 @@ Inherits Canvas
 		        (startColor.Blue * sAmt) + (endColor.Blue * eAmt))
 		        g.DrawLine(-1, i, g.width+1, i)
 		      Next
-		    end if
+		    End If
 		    
 		  End If
 		  
 		  // now draw the frame around it
 		  // first figure out what color to use
-		  #if TargetMacOS
+		  #If TargetMacOS
 		    #Pragma BreakOnExceptions False
 		    Try
 		      g.forecolor = SemanticColors.controlShadowColor
@@ -395,36 +438,38 @@ Inherits Canvas
 		      g.forecolor = SemanticColors.gridColor
 		    End Try
 		    #Pragma BreakOnExceptions default
-		  #else
+		  #Else
 		    g.ForeColor = DarkBevelColor
-		  #endif
+		  #EndIf
 		  
 		  Select Case bevel
-		  Case 0 // - Small Bevel
+		  Case kSmallBevel // 0 // - Small Bevel
 		    g.DrawRect 0,0,g.width,g.height
 		    
-		  Case 1 // - Normal Bevel
+		  Case kNormalBevel // 1 // - Normal Bevel
 		    g.DrawRect 0,0,g.width,g.height
 		    
-		  Case 2 // - Large Bevel
+		  Case kLargeBevel // 2 // - Large Bevel
 		    g.DrawRect 0,0,g.width,g.height
 		    
-		  Case 3 // - Rounded Bevel
+		  Case kRoundedBevel // 3 // - Rounded Bevel
 		    // oddly enough this one LOOKS like it fills the thing with white !?!?!?!?!?
 		    g.DrawRoundRect 0,0,g.width,g.height, arcWidth, archeight
 		    
-		  Case 4 // - No Bevel
+		  Case kNoBevel // 4 // - No Bevel
 		    // my favourite ... NOTHING TO DO !!!!!
 		    // except the bevel button draws one :(
-		    g.DrawRect 0,0,g.width,g.height
+		    #If TargetMacOS Then
+		      g.DrawRect 0,0,g.width,g.height
+		    #EndIf
 		    
-		  Case 5 // - Round
+		  Case kRoundBevel // 5 // - Round
 		    g.DrawOval topX, topY, ovalSize, ovalSize
 		    
-		  Case 6 // - Large Round
+		  Case kLargeRoundBevel // 6 // - Large Round
 		    g.DrawOval topX, topY, ovalSize, ovalSize
 		    
-		  Case 7 // - Disclosure
+		  Case kDisclosureBevel // 7 // - Disclosure
 		    g.DrawRoundRect 0, (g.height/2) - (kDisclosureBevelHeight/2) , kDisclosureBevelWidth, kDisclosureBevelHeight, arcWidth, arcHeight
 		    
 		  End Select
@@ -440,18 +485,22 @@ Inherits Canvas
 		  Dim tmp As Boolean = g.AntiAlias
 		  g.AntiAlias = True
 		  
-		  If bevel = 7 Then // disclosure style
+		  If bevel = kDisclosureBevel Then // disclosure style
 		    
 		    If mUseBevelButtonTextColor Then
 		      g.forecolor = mTextColor
-		    Elseif self.Value Then
+		    Elseif Self.Value Then
 		      g.ForeColor = SemanticColors.selectedMenuItemTextColor
 		    Else
-		      g.ForeColor = SemanticColors.textColor
+		      g.ForeColor = SemanticColors.TextColor
 		    End If
 		    
-		    g.DrawLine  6.5, 8.5, 10, 12.5
-		    g.DrawLine 13.5, 8.5, 10, 12.5
+		    #If TargetWindows
+		      
+		    #Else
+		      g.DrawLine  6.5, 8.5, 10, 12.5
+		      g.DrawLine 13.5, 8.5, 10, 12.5
+		    #EndIf
 		    
 		  Else
 		    
@@ -489,13 +538,13 @@ Inherits Canvas
 		    
 		    Select Case CaptionAlign
 		      
-		    Case 0 // - Flush left"
+		    Case kCaptionAlignFlushLeft // 0 // - Flush left"
 		      titleX = kGapToEdge
 		      
-		    Case 1 // - Flush right"
+		    Case kCaptionAlignFlushRight // 1 // - Flush right"
 		      titleX = (g.width - kGapToEdge) - g.StringWidth(caption)
 		      
-		    Case 2 // - Sys direction"
+		    Case kCaptionAlignSysDirection // 2 // - Sys direction"
 		      // not exactly sure about this one
 		      // so for now it matches Left
 		      
@@ -509,10 +558,10 @@ Inherits Canvas
 		    
 		    If mUseBevelButtonTextColor Then
 		      g.forecolor = mTextColor
-		    Elseif self.Value Then
+		    Elseif Self.Value Then
 		      g.ForeColor = SemanticColors.selectedMenuItemTextColor
 		    Else
-		      g.ForeColor = SemanticColors.textColor
+		      g.ForeColor = SemanticColors.TextColor
 		    End If
 		    
 		    g.DrawString caption, titleX + CaptionDelta, titleY
@@ -588,18 +637,22 @@ Inherits Canvas
 
 	#tag Method, Flags = &h1
 		Protected Sub DrawMenuIndicator(g as graphics)
-		  If bevel = 7 Then // disclosure style
-		    Return
-		  End If
+		  #If TargetWindows
+		  #Else
+		    If bevel = kDisclosureBevel Then // disclosure style
+		      Return
+		    End If
+		  #EndIf
 		  
 		  Dim tmp As Boolean = g.AntiAlias
 		  g.AntiAlias = True
 		  
 		  Select Case hasMenu
-		  Case 0
+		    
+		  Case kMenuNone
 		    // simple since this is "no menu"
 		    
-		  Case 1
+		  Case kMenuNormal
 		    // normal menu
 		    
 		    // drawn relative to the •                    
@@ -622,25 +675,29 @@ Inherits Canvas
 		    fs.BorderWidth = 1
 		    If mUseBevelButtonTextColor Then
 		      fs.BorderColor = TextColor
-		    else
-		      fs.BorderColor = SemanticColors.textColor
-		    end if
+		    Else
+		      fs.BorderColor = SemanticColors.TextColor
+		    End If
 		    
 		    fs.AddLine menuArrowLeftOffset, menuArrowTopOffset, 0, menuArrowPointTopOffset // the left side of the arrow
 		    fs.AddLine 0, menuArrowPointTopOffset, menuArrowRightOffset, 0
 		    fs.addline menuArrowRightOffset, 0, menuArrowLeftOffset, menuArrowTopOffset
 		    
-		    if mUseBevelButtonTextColor then
+		    If mUseBevelButtonTextColor Then
 		      fs.FillColor = TextColor
 		    Else
-		      fs.FillColor = SemanticColors.textColor
-		    end if
+		      fs.FillColor = SemanticColors.TextColor
+		    End If
 		    
 		    // note this draws using the midpoint (g.width-10, g.height-8) and) as X Y and draws
 		    // the arrow facing down
-		    g.DrawObject fs, g.width-10, g.height-8
+		    #If TargetWindows
+		      g.DrawObject fs, g.width-10, g.height/2
+		    #Else
+		      g.DrawObject fs, g.width-10, g.height-8
+		    #EndIf
 		    
-		  Case 2
+		  Case kMenuOnRight
 		    // menu on right
 		    // 
 		    // drawn relative to the •                    
@@ -667,9 +724,9 @@ Inherits Canvas
 		    If mUseBevelButtonTextColor Then
 		      fs.BorderColor = TextColor
 		    Else
-		      fs.BorderColor = SemanticColors.textColor
+		      fs.BorderColor = SemanticColors.TextColor
 		      
-		    End if
+		    End If
 		    
 		    fs.AddLine menuArrowLeftOffset, menuArrowTopOffset, menuArrowLeftOffset, -menuArrowTopOffset
 		    fs.AddLine menuArrowLeftOffset, -menuArrowTopOffset, menuArrowPointleftOffset, menuArrowPointTopOffset
@@ -677,15 +734,19 @@ Inherits Canvas
 		    
 		    If mUseBevelButtonTextColor Then
 		      fs.FillColor = TextColor
-		    else
-		      fs.FillColor = SemanticColors.textColor
+		    Else
+		      fs.FillColor = SemanticColors.TextColor
 		    End If
 		    
 		    fs.fill = 100
 		    
 		    // note this draws using the midpoint (g.width-10, g.height-8) and) as X Y and draws
 		    // the arrow facing eight
-		    g.DrawObject fs, g.width-10, g.height-8
+		    #If TargetWindows
+		      g.DrawObject fs, g.width-10, g.height/2
+		    #Else
+		      g.DrawObject fs, g.width-10, g.height-8
+		    #EndIf
 		    
 		  End Select
 		  
@@ -794,6 +855,14 @@ Inherits Canvas
 
 	#tag Hook, Flags = &h0
 		Event MouseDown(X As Integer, Y As Integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseEnter()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseExit()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -1137,6 +1206,10 @@ Inherits Canvas
 		Private mMenuValue As integer
 	#tag EndProperty
 
+	#tag Property, Flags = &h1
+		Protected mMouseInside As boolean = false
+	#tag EndProperty
+
 	#tag Property, Flags = &h0
 		mMouseIsDown As boolean
 	#tag EndProperty
@@ -1291,7 +1364,79 @@ Inherits Canvas
 	#tag Constant, Name = arcWidth, Type = Double, Dynamic = False, Default = \"9", Scope = Private
 	#tag EndConstant
 
+	#tag Constant, Name = kButtonTypeButton, Type = Double, Dynamic = False, Default = \"0", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kButtonTypeSticky, Type = Double, Dynamic = False, Default = \"2", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kButtonTypeToggle, Type = Double, Dynamic = False, Default = \"1", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionAlignCenter, Type = Double, Dynamic = False, Default = \"3", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionAlignFlushLeft, Type = Double, Dynamic = False, Default = \"0", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionAlignFlushRight, Type = Double, Dynamic = False, Default = \"1", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionAlignSysDirection, Type = Double, Dynamic = False, Default = \"2", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionPlacementAboveGraphic, Type = Double, Dynamic = False, Default = \"5", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionPlacementBelowGraphic, Type = Double, Dynamic = False, Default = \"4", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionPlacementLeftOfGraphic, Type = Double, Dynamic = False, Default = \"3", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionPlacementNormally, Type = Double, Dynamic = False, Default = \"1", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionPlacementRightOfGraphic, Type = Double, Dynamic = False, Default = \"2", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kCaptionPlacementSysDirection, Type = Double, Dynamic = False, Default = \"0", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kDisclosureBevel, Type = Double, Dynamic = False, Default = \"7", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kLargeBevel, Type = Double, Dynamic = False, Default = \"2\n", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kLargeRoundBevel, Type = Double, Dynamic = False, Default = \"6", Scope = Public
+	#tag EndConstant
+
 	#tag Constant, Name = kMenuError, Type = String, Dynamic = False, Default = \"You may use SetMenu or the menu functions\x2C but not both", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = kMenuNone, Type = Double, Dynamic = False, Default = \"0", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kMenuNormal, Type = Double, Dynamic = False, Default = \"1", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kMenuOnRight, Type = Double, Dynamic = False, Default = \"2", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kNoBevel, Type = Double, Dynamic = False, Default = \"4\n", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kNormalBevel, Type = Double, Dynamic = False, Default = \"1\n", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kRoundBevel, Type = Double, Dynamic = False, Default = \"5\n", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kRoundedBevel, Type = Double, Dynamic = False, Default = \"3\n", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kSmallBevel, Type = Double, Dynamic = False, Default = \"0", Scope = Public
 	#tag EndConstant
 
 
