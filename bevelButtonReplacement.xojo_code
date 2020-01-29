@@ -533,6 +533,7 @@ Inherits Canvas
 		    Wend
 		    caption = leftChunk+middleEllipsis+rightChunk
 		    
+		    Dim captionWidth As Double = g.StringWidth(caption)
 		    Dim captionHeight As Integer = g.StringHeight(caption, Me.width + 10)
 		    titleY = (g.height - captionHeight)/2 + g.TextAscent
 		    
@@ -542,7 +543,7 @@ Inherits Canvas
 		      titleX = kGapToEdge
 		      
 		    Case kCaptionAlignFlushRight // 1 // - Flush right"
-		      titleX = (g.width - kGapToEdge) - g.StringWidth(caption)
+		      titleX = (g.width - kGapToEdge) - captionWidth
 		      
 		    Case kCaptionAlignSysDirection // 2 // - Sys direction"
 		      // not exactly sure about this one
@@ -552,7 +553,27 @@ Inherits Canvas
 		      
 		    Else // includes Case 3 // - Center
 		      // default to center
-		      titleX = g.width/2 - g.StringWidth(caption) / 2
+		      titleX = g.width/2 - captionWidth / 2
+		      
+		    End Select
+		    
+		    Select Case CaptionPlacement
+		    Case 0 // - Sys Direction
+		    Case 1 // - Normally
+		      
+		    Case 2 // - Right of graphic - this overrides whatever alignment is set above
+		      titleX = mIconLeft + Icon.Width + kDefaultIconInset
+		      titleY = mIconTop + (Icon.Height/2)
+		      
+		    Case 3 // - Left of graphic - this overrides whatever alignment is set above
+		      titleX = mIconLeft - kDefaultIconInset - captionWidth
+		      titleY = mIconTop + (Icon.Height/2)
+		      
+		    Case 4 // - Below graphic
+		      titleY = mIconTop + Icon.Height + kDefaultIconInset + g.TextAscent
+		      
+		    Case 5 // - Above graphic
+		      titleY = mIconTop - kDefaultIconInset - (captionHeight - g.TextAscent)
 		      
 		    End Select
 		    
@@ -574,63 +595,61 @@ Inherits Canvas
 
 	#tag Method, Flags = &h1
 		Protected Sub DrawIcon(g as graphics)
-		  Const kDefaultInset = 2
-		  
 		  Dim tmp As Boolean = g.AntiAlias
 		  g.AntiAlias = True
 		  
 		  If Self.Icon <> Nil Then
-		    Dim iconTop As Integer
-		    Dim iconLeft As Integer
+		    
 		    
 		    Select Case IconAlignments(Self.IconAlign)
 		      
 		    Case IconAlignments.SysDirection
-		      iconLeft = kDefaultInset
-		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      mIconLeft = kDefaultIconInset
+		      mIconTop = (Self.Height / 2) - (icon.Height / 2)
 		      
 		    Case IconAlignments.Bottom
-		      iconLeft = (Me.width / 2) - (icon.width / 2)
-		      iconTop = Self.Height - icon.Height - kDefaultInset
+		      mIconLeft = (Me.width / 2) - (icon.width / 2)
+		      mIconTop = Self.Height - icon.Height - kDefaultIconInset
 		      
 		    Case IconAlignments.BottomLeft
-		      iconLeft = kDefaultInset
-		      iconTop = Self.Height - icon.Height - kDefaultInset
+		      mIconLeft = kDefaultIconInset
+		      mIconTop = Self.Height - icon.Height - kDefaultIconInset
 		      
 		    Case IconAlignments.BottomRight
-		      iconLeft = Me.width - kDefaultInset - icon.width
-		      iconTop = Self.Height - icon.Height - kDefaultInset
+		      mIconLeft = Me.width - kDefaultIconInset - icon.width
+		      mIconTop = Self.Height - icon.Height - kDefaultIconInset
 		      
 		    Case IconAlignments.Center
-		      iconLeft = (Me.width / 2) - (icon.width / 2)
-		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      mIconLeft = (Me.width / 2) - (icon.width / 2)
+		      mIconTop = (Self.Height / 2) - (icon.Height / 2)
 		      
 		    Case IconAlignments.Left
-		      iconLeft = kDefaultInset
-		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      mIconLeft = kDefaultIconInset
+		      mIconTop = (Self.Height / 2) - (icon.Height / 2)
 		      
 		    Case IconAlignments.Right
-		      iconLeft = Me.width - kDefaultInset - icon.width
-		      iconTop = (Self.Height / 2) - (icon.Height / 2)
+		      mIconLeft = Me.width - kDefaultIconInset - icon.width
+		      mIconTop = (Self.Height / 2) - (icon.Height / 2)
 		      
 		    Case IconAlignments.Top
-		      iconLeft = (Me.width / 2) - (icon.width / 2)
-		      iconTop = kDefaultInset
+		      mIconLeft = (Me.width / 2) - (icon.width / 2)
+		      mIconTop = kDefaultIconInset
 		      
 		    Case IconAlignments.TopLeft
-		      iconLeft = kDefaultInset
-		      iconTop = kDefaultInset
+		      mIconLeft = kDefaultIconInset
+		      mIconTop = kDefaultIconInset
 		      
 		    Case IconAlignments.TopRight
-		      iconLeft = Me.width - kDefaultInset - icon.width
-		      iconTop = kDefaultInset
+		      mIconLeft = Me.width - kDefaultIconInset - icon.width
+		      mIconTop = kDefaultIconInset
 		      
 		    End Select
 		    
-		    g.DrawPicture Self.icon, iconLeft, iconTop
+		    g.DrawPicture Self.icon, mIconLeft, mIconTop
 		    
 		  End If
 		  
+		  g.AntiAlias = tmp
 		  
 		End Sub
 	#tag EndMethod
@@ -1187,6 +1206,14 @@ Inherits Canvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mIconLeft As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mIconTop As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mIsMenuShowing As Boolean
 	#tag EndProperty
 
@@ -1401,6 +1428,9 @@ Inherits Canvas
 	#tag EndConstant
 
 	#tag Constant, Name = kCaptionPlacementSysDirection, Type = Double, Dynamic = False, Default = \"0", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kDefaultIconInset, Type = Double, Dynamic = False, Default = \"2", Scope = Private
 	#tag EndConstant
 
 	#tag Constant, Name = kDisclosureBevel, Type = Double, Dynamic = False, Default = \"7", Scope = Public
