@@ -527,6 +527,9 @@ Inherits Canvas
 		    While kGapToEdge + g.StringWidth(leftChunk+middleEllipsis+rightChunk) + kGapToEdge > g.width
 		      leftChunk = Left(leftChunk , Len(leftChunk)-1)
 		      rightChunk = Mid(rightchunk, 2)
+		      If leftChunk.Len = 0 Or rightchunk.Len = 0
+		        Exit While
+		      End If
 		      If middleEllipsis = "" Then
 		        middleEllipsis = &u2026
 		      End If
