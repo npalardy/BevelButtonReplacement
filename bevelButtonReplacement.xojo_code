@@ -44,6 +44,8 @@ Inherits Canvas
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  mMouseIsDown = True
+		  
 		  Me.Invalidate
 		  
 		  mRaiseActionEvent = True
@@ -60,15 +62,9 @@ Inherits Canvas
 		      DoAction()
 		    End If
 		    
-		    Return retValue
-		    
-		  Else
-		    
-		    mMouseIsDown = True
-		    
-		    Return True
-		    
 		  End If
+		  
+		  Return True
 		  
 		End Function
 	#tag EndEvent
@@ -108,6 +104,7 @@ Inherits Canvas
 		  #pragma unused Y
 		  
 		  If mRaiseActionEvent Then
+		    
 		    If (x >= 0) And (x <= Me.width) And (y >= 0) And (y <= Me.height) Then
 		      
 		      // ok here's a screwy set up 
@@ -126,6 +123,7 @@ Inherits Canvas
 		    End If
 		  End If
 		  
+		  System.debuglog CurrentMethodName
 		  
 		  mMouseIsDown = False
 		  Me.Invalidate
@@ -303,6 +301,8 @@ Inherits Canvas
 		  Const kDisclosureBevelHeight = 20
 		  
 		  g.ClearRect 0, 0, g.width, g.height
+		  g.ForeColor = BackColor
+		  g.FillRect 0, 0, g.width, g.height
 		  
 		  // what colors to use ????
 		  // ButtonType
@@ -395,38 +395,48 @@ Inherits Canvas
 		  Elseif bevel = kNoBevel Then
 		    // no bevel !!!!!!
 		    
-		  Else
-		    If IsDarkMode Or Self.Value Then
-		      g.FillRect 0, 0, g.width, g.height
+		  Elseif mMouseIsDown Then
+		    System.debuglog "mouse is down"
+		    If IsDarkMode Then
+		      g.ForeColor = lighten(g.ForeColor) // lighten slightly
 		    Else
-		      //g.FillRect 0, 0, g.width, g.height
-		      Dim sAmt, eAmt As Double
-		      Dim startColor As Color
-		      Dim endColor As Color
-		      #If TargetWindows
-		        If mMouseInside Then
-		          startColor = &cE1F3FC
-		          endColor = &cB2E0F9
-		        Else
-		          startColor = &cE9E9E9
-		          endColor = &cF7F7F7
-		        End If
-		      #Else
+		      g.forecolor = darken(g.ForeColor) // darken slightly
+		    End If
+		    g.FillRect 0, 0, g.width, g.height
+		    
+		  Elseif IsDarkMode Or Self.Value Then
+		    System.debuglog "IsDarkMode Or Self.Value"
+		    g.FillRect 0, 0, g.width, g.height
+		  Else
+		    System.debuglog "else"
+		    //g.FillRect 0, 0, g.width, g.height
+		    Dim sAmt, eAmt As Double
+		    Dim startColor As Color
+		    Dim endColor As Color
+		    #If TargetWindows
+		      If mMouseInside Then
+		        startColor = &cE1F3FC
+		        endColor = &cB2E0F9
+		      Else
 		        startColor = &cE9E9E9
 		        endColor = &cF7F7F7
-		      #EndIf
-		      
-		      For i As Integer = 0 To height
-		        sAmt = 1 - (i / g.height)
-		        eAmt = i / g.height
-		        g.ForeColor = RGB((startColor.Red * sAmt) + (endColor.Red * eAmt), _
-		        (startColor.Green *sAmt) + (endColor.Green * eAmt), _
-		        (startColor.Blue * sAmt) + (endColor.Blue * eAmt))
-		        g.DrawLine(-1, i, g.width+1, i)
-		      Next
-		    End If
+		      End If
+		    #Else
+		      startColor = &cE9E9E9
+		      endColor = &cF7F7F7
+		    #EndIf
 		    
+		    For i As Integer = 0 To height
+		      sAmt = 1 - (i / g.height)
+		      eAmt = i / g.height
+		      g.ForeColor = RGB((startColor.Red * sAmt) + (endColor.Red * eAmt), _
+		      (startColor.Green *sAmt) + (endColor.Green * eAmt), _
+		      (startColor.Blue * sAmt) + (endColor.Blue * eAmt))
+		      g.DrawLine(-1, i, g.width+1, i)
+		    Next
 		  End If
+		  
+		  
 		  
 		  // now draw the frame around it
 		  // first figure out what color to use
@@ -1489,84 +1499,77 @@ Inherits Canvas
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="AllowAutoDeactivate"
+			Name="AutoDeactivate"
 			Visible=true
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Tooltip"
+			Name="HelpTag"
 			Visible=true
 			Group="Appearance"
-			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="AllowFocusRing"
+			Name="UseFocusRing"
 			Visible=true
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="AllowFocus"
+			Name="AcceptFocus"
 			Visible=true
 			Group="Behavior"
-			InitialValue="False"
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="AllowTabs"
+			Name="AcceptTabs"
 			Visible=true
 			Group="Behavior"
-			InitialValue="False"
 			Type="Boolean"
-			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="EraseBackground"
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InitialValue=""
 			Type="String"
-			EditorType=""
+			EditorType="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
-			InitialValue=""
 			Type="Integer"
-			EditorType=""
+			EditorType="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InitialValue=""
 			Type="String"
-			EditorType=""
+			EditorType="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
-			InitialValue=""
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
-			InitialValue=""
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Width"
@@ -1574,7 +1577,6 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="60"
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Height"
@@ -1582,39 +1584,30 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="22"
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockLeft"
 			Visible=true
 			Group="Position"
-			InitialValue=""
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockTop"
 			Visible=true
 			Group="Position"
-			InitialValue=""
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockRight"
 			Visible=true
 			Group="Position"
-			InitialValue=""
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockBottom"
 			Visible=true
 			Group="Position"
-			InitialValue=""
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TabIndex"
@@ -1622,7 +1615,6 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TabStop"
@@ -1630,7 +1622,6 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="True"
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Transparent"
@@ -1638,7 +1629,7 @@ Inherits Canvas
 			Group="Appearance"
 			InitialValue="False"
 			Type="Boolean"
-			EditorType=""
+			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Visible"
@@ -1646,7 +1637,6 @@ Inherits Canvas
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Enabled"
@@ -1654,23 +1644,18 @@ Inherits Canvas
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Bold"
 			Visible=true
 			Group="Font"
-			InitialValue=""
 			Type="boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Italic"
 			Visible=true
 			Group="Font"
-			InitialValue=""
 			Type="boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextFont"
@@ -1686,7 +1671,6 @@ Inherits Canvas
 			Group="Font"
 			InitialValue="0"
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextUnit"
@@ -1707,9 +1691,7 @@ Inherits Canvas
 			Name="Underline"
 			Visible=true
 			Group="Font"
-			InitialValue=""
 			Type="boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Caption"
@@ -1753,17 +1735,13 @@ Inherits Canvas
 			Name="CaptionDelta"
 			Visible=true
 			Group="Behavior"
-			InitialValue=""
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Icon"
 			Visible=true
 			Group="Behavior"
-			InitialValue=""
 			Type="Picture"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="IconAlign"
@@ -1789,17 +1767,13 @@ Inherits Canvas
 			Name="IconDX"
 			Visible=true
 			Group="Behavior"
-			InitialValue=""
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="IconDY"
 			Visible=true
 			Group="Behavior"
-			InitialValue=""
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Bevel"
@@ -1836,9 +1810,7 @@ Inherits Canvas
 			Name="HasBackColor"
 			Visible=true
 			Group="Behavior"
-			InitialValue=""
 			Type="boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="BackColor"
@@ -1846,7 +1818,6 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&c000000"
 			Type="Color"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="UseBevelButtonTextColor"
@@ -1854,7 +1825,6 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="False"
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextColor"
@@ -1862,7 +1832,6 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&c000000"
 			Type="Color"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ButtonType"
@@ -1881,9 +1850,7 @@ Inherits Canvas
 			Name="Value"
 			Visible=true
 			Group="Behavior"
-			InitialValue=""
 			Type="boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="MenuValue"
@@ -1891,47 +1858,32 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="0"
 			Type="integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="mMouseIsDown"
-			Visible=false
 			Group="Behavior"
-			InitialValue=""
 			Type="boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TabPanelIndex"
-			Visible=false
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Backdrop"
-			Visible=false
 			Group="Appearance"
-			InitialValue=""
 			Type="Picture"
-			EditorType=""
+			EditorType="Picture"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DoubleBuffer"
-			Visible=false
 			Group="Behavior"
-			InitialValue=""
 			Type="Boolean"
-			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="InitialParent"
-			Visible=false
-			Group=""
-			InitialValue=""
 			Type="String"
-			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
